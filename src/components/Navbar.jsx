@@ -24,7 +24,7 @@ export default function Navbar() {
     return (
         <nav className="flex items-center justify-between py-4">
             <div className="left flex items-center justify-between w-full md:w-fit ">
-                <Logo />                
+                <Logo textSize="1.8rem" />                
                 {menu ? <X onClick={() => setMenu(!menu)} color='gray' size={24} className='md:hidden' /> : <AlignJustify onClick={() => setMenu(!menu)} color='gray' size={24} className='md:hidden' />}
             </div>
             <div className="middle ">
@@ -50,7 +50,7 @@ export default function Navbar() {
                 </ul>
             </div>
             <div className="right hidden md:block">
-                <Link href="/" className='btn-2'>
+                <Link href="/qwik-chat" className='btn-2'>
                     {`Learn`}
                 </Link>
             </div>

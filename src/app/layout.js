@@ -18,17 +18,21 @@ export default function RootLayout({ children }) {
   const pathname = usePathname();
   const noHeader =
     pathname.includes("sign-in") ||
-    pathname.includes("sign-up") 
+    pathname.includes("sign-up") ||
+    pathname.includes("qwik-chat") 
 
+  
+  const noFooter = pathname.includes("qwik-chat")
+  
   return (
     <html lang="en">
       <body
-        className={`${inter.className} min-h-screen max-w-[1920px] min-w-fit mx-auto px-4 relative bg-[#f0f2f5] text-gray pb-20`}
+        className={`${inter.className} min-h-screen max-w-[1920px] min-w-fit mx-auto px-4 relative bg-[#f0f2f5] text-gray pb20`}
       >
         <Toaster richColors position="top-right" />
         {!noHeader && <Navbar />}
         {children}
-        <Footer />
+        {!noFooter && <Footer />}
       </body>
     </html>
   );
