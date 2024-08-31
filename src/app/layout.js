@@ -1,11 +1,12 @@
-"use client"
+"use client";
 
 import { usePathname } from "next/navigation";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Navbar from "@/components/ui/Navbar";
+import Footer from "@/components/ui/Footer";
+import { ThemeProvider } from "./provider/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,20 +20,21 @@ export default function RootLayout({ children }) {
   const noHeader =
     pathname.includes("sign-in") ||
     pathname.includes("sign-up") ||
-    pathname.includes("qwik-chat") 
+    pathname.includes("qwik-chat");
 
-  
-  const noFooter = pathname.includes("qwik-chat")
-  
+  const noFooter = pathname.includes("qwik-chat");
+
   return (
     <html lang="en">
       <body
-        className={`${inter.className} min-h-screen max-w-[1920px] min-w-fit mx-auto px-4 relative bg-[#f0f2f5] text-gray pb20`}
+        className={`${inter.className} min-h-screen max-w-[1920px] min-w-fit mx-auto px-4 relative bg-[#f0f2f5] text-gray pb20 overflow-x-hidden `}
       >
-        <Toaster richColors position="top-right" />
-        {!noHeader && <Navbar />}
-        {children}
-        {!noFooter && <Footer />}
+        <ThemeProvider>
+          <Toaster richColors position="top-right" />
+          {!noHeader && <Navbar />}
+          {children}
+          {!noFooter && <Footer />}
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation'; 
 import { useState } from 'react';
 import Logo from './Logo';
+import ThemeToggle from '@/components/ui/ThemeToggle';
+import { useUserStore } from '@/app/lib/userStore';
+import Image from 'next/image';
 
 export default function Navbar() {
     const navItems = [
@@ -21,10 +24,13 @@ export default function Navbar() {
         setMenu(!menu);
     };
 
+
+  const {currentUser}  = useUserStore()
+
     return (
         <nav className="flex items-center justify-between py-4">
             <div className="left flex items-center justify-between w-full md:w-fit ">
-                <Logo textSize="1.8rem" />                
+                <Logo textSize="1.8rem" />   
                 {menu ? <X onClick={() => setMenu(!menu)} color='gray' size={24} className='md:hidden' /> : <AlignJustify onClick={() => setMenu(!menu)} color='gray' size={24} className='md:hidden' />}
             </div>
             <div className="middle ">
@@ -49,10 +55,18 @@ export default function Navbar() {
                     ))}
                 </ul>
             </div>
-            <div className="right hidden md:block">
-                <Link href="/qwik-chat" className='btn-2'>
-                    {`Learn`}
+            <div className="right hidden md:flex items-center gap-5">
+                 <ThemeToggle />
+                {
+                    currentUser ? <Image
+                        src={currentUser?.avatar}
+                        alt='user picture'
+                        width={50}
+      height={50}
+	  quality={100} className='w-12 h-12 rounded-full' />  : <Link href="/qwik-chat" className='btn-2'>
+                    {`Messages`}
                 </Link>
+                }
             </div>
         </nav>
     );

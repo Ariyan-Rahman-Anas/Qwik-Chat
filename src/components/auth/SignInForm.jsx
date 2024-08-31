@@ -1,12 +1,16 @@
 "use client"
 
 import { useRouter } from 'next/navigation'; 
-import { useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { auth } from '@/app/firebase/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const SignInForm = () => {
     // const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
     const router = useRouter();
 
     const {
@@ -17,40 +21,41 @@ const SignInForm = () => {
     } = useForm();
 
 
-    const handleLogin = (formData) => {
-        login(formData);
+    const handleLogin = async (data) => {
+        setLoading(true)
+        console.log("data are", data)
+        const {  email, password } = data;
+        try {
+            await signInWithEmailAndPassword(auth, email, password)
+        } catch (error) {
+            toast.error(error.message)
+            console.log("err is ", error)
+        } finally {
+            setLoading(false)
+        }
     }
-
-    // useEffect(() => {
-    //     if (error?.data) {
-    //         setError("root.random", {
-    //             type: "random",
-    //             message: error.data?.message,
-    //         });
-
-    //         toast.error(error.data?.message);
-    //     }
-
-    //     if (data && data?.data?.token) {
-    //         toast.success(data?.message);
-    //         // navigate("/exams");
-    //         router.push('/new-page');
-    //     }
-    // }, [data, error, router, setError]);
 
     return (
         <form
-            // onSubmit={handleSubmit(handleLogin)}
+            onSubmit={handleSubmit(handleLogin)}
             >
             <div className="grid gap-y-4">
 
                 <div className="grid gap-1 relative ">
                     <input
+                        id="email"
                         type="email"
                         name="email"
                         required
                         className="input-field peer"
                         placeholder=" "
+                        {...register("email", {
+                            required: "Email is required",
+                            pattern: {
+                                value: /^\S+@\S+$/i,
+                                message: "Enter a valid email address",
+                            },
+                        })}
                     />
                     <label
                         htmlFor="email"
@@ -90,13 +95,9 @@ const SignInForm = () => {
                 }
                 
 
-                <button
-                    className='btn'
-                    
-                // disabled={isLoading}
-                >
-                    Login
-                </button>
+               <button disabled={loading} className={`${loading ? "disabled-btn" : "btn"} `} type="submit">
+          Create an account
+        </button>
             </div>
         </form>
     )

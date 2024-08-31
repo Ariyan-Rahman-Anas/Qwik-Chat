@@ -13,6 +13,10 @@
     @apply cursor-pointer bg-white text-primary font-medium px-4 py-2 rounded-md border-[.1rem] hover:text-white  hover:bg-primary border-primary hover:shadow-md duration-500 
 }
 
+.disabled-btn{
+  @apply cursor-progress text-gray-300 bg-blue-400 font-medium px-4 py-2 rounded-md border-[.1rem] border-transparent  duration-500 
+}
+
 .select-btn{
     @apply w-full p-2 shadow rounded-md
 }
@@ -32,6 +36,15 @@
     @apply text-danger text-sm font-semibold text-left 
 }
 
+
+/* Example global styles */
+body {
+  @apply bg-white text-black;
+}
+
+html.dark body {
+  @apply bg-darkGray text-white;
+}
 
 /* .btn {
     @apply border px-4 py-3 rounded-md border-gray hover:bg-gray hover:text-darkGray duration-500 ;
