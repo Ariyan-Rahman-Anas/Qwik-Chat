@@ -51,32 +51,28 @@ export default function ChatBox({ toggleDetails, openDetails }) {
           />
           <div className="relative">
             <div
-              className={`transition-opacity duration-300 ${
-                openDetails ? 'opacity-0' : 'opacity-100'
-              }`}
+              className={`transition-opacity duration-300 ${openDetails ? 'opacity-0' : 'opacity-100'
+                }`}
             >
               <Info
                 strokeWidth={2}
                 size={20}
                 color="#0861f2"
-                className={`cursor-pointer transform transition-transform duration-500 ${
-                  openDetails ? 'rotate-180' : 'rotate-0'
-                }`}
+                className={`cursor-pointer transform transition-transform duration-500 ${openDetails ? 'rotate-180' : 'rotate-0'
+                  }`}
                 onClick={toggleDetails}
               />
             </div>
             <div
-              className={`absolute inset-0 transition-opacity duration-300 ${
-                openDetails ? 'opacity-100' : 'opacity-0'
-              }`}
+              className={`absolute inset-0 transition-opacity duration-300 ${openDetails ? 'opacity-100' : 'opacity-0'
+                }`}
             >
               <PanelRightClose
                 strokeWidth={2}
                 size={20}
                 color="#0861f2"
-                className={`cursor-pointer transform transition-transform duration-500 ${
-                  openDetails ? 'rotate-0' : '-rotate-180'
-                }`}
+                className={`cursor-pointer transform transition-transform duration-500 ${openDetails ? 'rotate-0' : '-rotate-180'
+                  }`}
                 onClick={toggleDetails}
               />
             </div>
@@ -135,11 +131,10 @@ export default function ChatBox({ toggleDetails, openDetails }) {
           </div>
           <div className="relative w-6 h-6">
             <div
-              className={`absolute inset-0 flex items-center justify-center transform transition-transform duration-500 ${
-                message.trim()
+              className={`absolute inset-0 flex items-center justify-center transform transition-transform duration-500 ${message.trim()
                   ? '-translate-y-6 opacity-0'
                   : 'translate-y-0 opacity-100'
-              }`}
+                }`}
             >
               <ThumbsUp
                 strokeWidth={2}
@@ -149,11 +144,10 @@ export default function ChatBox({ toggleDetails, openDetails }) {
               />
             </div>
             <div
-              className={`absolute inset-0 flex items-center justify-center transform transition-transform duration-500 ${
-                message.trim()
+              className={`absolute inset-0 flex items-center justify-center transform transition-transform duration-500 ${message.trim()
                   ? 'translate-y-0 opacity-100'
                   : 'translate-y-6 opacity-0'
-              }`}
+                }`}
             >
               <SendHorizontal
                 strokeWidth={2}

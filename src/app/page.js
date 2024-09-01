@@ -1,7 +1,7 @@
 "use client";
 
 import Hero from "@/components/ui/Hero";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -11,8 +11,9 @@ import Loading from "./Loading";
 
 export default function Home() {
   const router = useRouter();
-  const {currentUser, isLoading, fetchUserInfo}  = useUserStore()
+  const { currentUser, isLoading, fetchUserInfo } = useUserStore();
 
+  //observing the current user
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (user) => {
       fetchUserInfo(user?.uid);
@@ -23,13 +24,19 @@ export default function Home() {
       unSub();
     };
   }, [fetchUserInfo]);
-
   console.log("currentUser is: ", currentUser);
 
-
-  if (isLoading) return <div> <Loading /> </div>
-  // const currentUser = true
   
+
+  if (isLoading)
+    return (
+      <div>
+        {" "}
+        <Loading />{" "}
+      </div>
+    );
+  // const currentUser = true
+
   // if (currentUser) {
   //   router.push("/qwik-chat")
   // } else {

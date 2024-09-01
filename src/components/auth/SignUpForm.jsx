@@ -1,39 +1,36 @@
 "use client";
 
-import {  useState } from "react";
-import {  useForm } from "react-hook-form";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../../app/firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import upload from "@/app/firebase/upload";
 
 
 const SignUpForm = () => {
+
   const router = useRouter();
   const [profileImage, setProfileImage] = useState({ file: null, url: "" });
   const [imageError, setImageError] = useState("");
   const [loading, setLoading] = useState(false);
 
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
-    setError,
-    control,
   } = useForm();
-  const watchPassword = watch("password");
 
+  // validating profile  picture
   const handleProfileImage = (e) => {
     const file = e.target.files[0];
 
     if (file) {
       const validTypes = ["image/jpeg", "image/jpg", "image/png"];
       const isValidType = validTypes.includes(file.type);
-      const isValidSize = file.size <= 10 * 1024 * 1024; // 10 MB
+      const isValidSize = file.size <= 10 * 1024 * 1024; // 10 MB 
 
       if (!isValidType) {
         setImageError("Only jpg, jpeg, and png formats are allowed.");
@@ -58,11 +55,12 @@ const SignUpForm = () => {
     }
   };
 
+  //handling user creation
   const handleSignUp = async (data) => {
     setLoading(true)
     const { firstName, lastName, email, password, day, month, year, gender } = data;
 
-    // Validate image before proceeding
+    // again validate image before proceeding
     if (!profileImage.file) {
       setImageError("Please select an image.");
       return;
@@ -82,11 +80,10 @@ const SignUpForm = () => {
       return;
     }
 
-    try {
       // Proceed with Firebase Authentication
+    try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
-      const imgURL =  await upload(profileImage.file)
-      // After successful authentication, process the rest of the form data
+      const imgURL = await upload(profileImage.file)
       const formData = new FormData();
       const dateOfBirth = `${year}-${month}-${day}`;
       formData.append("firstName", firstName);
@@ -97,27 +94,29 @@ const SignUpForm = () => {
       formData.append("gender", gender);
       formData.append("profileImage", profileImage.file);
 
-      // You can now send `formData` to your backend for further processing
+      // sending `formData` to the backend for further processing
+       //updating the user profile
+      await updateProfile(auth.currentUser, {
+        displayName: `${firstName} ${lastName}`,
+      })
+
       await setDoc(doc(db, "users", res.user.uid), {
         username: `${firstName} ${lastName}`,
         email,
         avatar: imgURL,
         id: res.user.uid,
         blocked: []
-      } )
+      })
+
       await setDoc(doc(db, "userChats", res.user.uid), {
         chats: []
-      } )
-      console.log("Firebase response:", res);
-
-      console.log("Form Data:", Object.fromEntries(formData.entries()));
+      })
       toast.success("Account created successfully!");
-      // router.push("/qwik-chat");
+      router.push("/qwik-chat");
     } catch (error) {
       if (error.message.includes("auth/email-already-in-use")) {
-          toast.error("This Email is already registered!😑");
+        toast.error("This Email is already registered!😑");
       }
-      console.error("Error during sign-up:", error.message);
     } finally {
       setLoading(false)
     }
@@ -126,6 +125,7 @@ const SignUpForm = () => {
   return (
     <form onSubmit={handleSubmit(handleSignUp)}>
       <div className="grid gap-4 space-y-2">
+
         {/* Name */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="grid gap-1 relative">
@@ -327,5 +327,4 @@ const SignUpForm = () => {
     </form>
   );
 };
-
 export default SignUpForm;
