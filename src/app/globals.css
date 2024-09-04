@@ -46,6 +46,28 @@ html.dark body {
   @apply bg-darkGray text-white;
 }
 
+
+html {
+  scroll-behavior: smooth;
+}
+
+/*====--- custom scroll bar ---====*/
+::-webkit-scrollbar {
+  width: 0.25rem;
+}
+::-webkit-scrollbar-track {
+  background-color: #ffffff;
+}
+::-webkit-scrollbar-thumb {
+  background: #0861f2;
+  border-radius: 1rem;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a6a5a5;
+}
+
+
+
 /* .btn {
     @apply border px-4 py-3 rounded-md border-gray hover:bg-gray hover:text-darkGray duration-500 ;
 }

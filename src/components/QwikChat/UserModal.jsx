@@ -42,7 +42,6 @@ export const UserModal = ({ title }) => {
                             quality={100} className='absolute top-5 left-0 right-0 w-20 h-20 rounded-full border2 border-primary mx-auto shadow shadow-darkGray ' />
                         <h1 className="text-primary font-medium mt-7 " >{currentUser?.username}</h1>
                         <h1 className="text-sm" >{currentUser?.email}</h1>
-                        <h6 className="text-center text-sm font-medium opacity-70"></h6>
                         <div className='flex items-center justify-around mt-4 w-full '>
                             <button
                                 onClick={handleLogout}

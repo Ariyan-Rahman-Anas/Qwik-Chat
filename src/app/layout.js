@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${inter.className} min-h-screen max-w-[1920px] min-w-fit mx-auto px4 relative bg-[#f0f2f5] text-gray pb20 overflow-x-hidden `}
+        className={`${inter.className} min-h-screen max-w-[1920px] min-w-fit mx-auto px4 relative bg[#f0f2f5] text-gray pb20 overflow-x-hidden `}
       >
         <ThemeProvider>
           <Toaster richColors position="top-right" />

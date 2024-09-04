@@ -13,7 +13,7 @@ export default function QwikChatPage() {
   };
 
   return (
-    <div className="grid grid-cols-4 gap-0 min-h-screen overflow-hidden">
+    <div className="grid grid-cols-4 gap-0 max-h-screen  overflow-hidden">
       <div className="col-span-1">
         <ChatList />
       </div>

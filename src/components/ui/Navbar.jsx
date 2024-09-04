@@ -34,7 +34,9 @@ export default function Navbar() {
                 <Logo textSize="1.8rem" />
                 {menu ? <X onClick={() => setMenu(!menu)} color='gray' size={24} className='md:hidden' /> : <AlignJustify onClick={() => setMenu(!menu)} color='gray' size={24} className='md:hidden' />}
             </div>
-            <div className="middle ">
+
+
+            {/* <div className="middle ">
                 <ul
                     className={`flex flex-col md:flex-row items-center justify-center gap-x-8 gap-y-4 absolute md:static ${menu
                         ? "left-0 top-[3.8rem] py-10 md:py-0 right-0 bg-black md:bg-transparent rounded-md w-full min-h-screen md:min-h-0 "
@@ -55,24 +57,20 @@ export default function Navbar() {
                         </li>
                     ))}
                 </ul>
-            </div>
+            </div> */}
+
+
             <div className="right hidden md:flex items-center gap-5">
-                <ThemeToggle />
                 {
                     currentUser ?
-                        // <Image
-                        //     src={currentUser?.avatar}
-                        //     alt='user picture'
-                        //     width={50}
-                        //     height={50}
-                        //     quality={100} className='w-12 h-12 rounded-full' />
                         <div>
                             <ProfileModal title={"Profile"} />
                         </div>
-                        : <Link href="/qwik-chat" className='btn-2'>
+                        : <Link href="/sign-in" className='btn-2'>
                             {`Messages`}
                         </Link>
                 }
+                <ThemeToggle />
             </div>
         </nav>
     );
